@@ -1,0 +1,65 @@
+-- Tabela paciente
+CREATE TABLE paciente (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) UNIQUE NOT NULL
+);
+
+-- Tabela medico
+CREATE TABLE medico (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) UNIQUE NOT NULL,
+    especialidade VARCHAR(100) NOT NULL
+);
+
+-- Tabela proteina_total (tabela exame)
+CREATE TABLE proteina_total (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    resultado VARCHAR(100) NOT NULL, 
+    id_paciente INT NOT NULL,
+    id_medico INT NOT NULL,
+    FOREIGN KEY (id_paciente) REFERENCES paciente(id), 
+    FOREIGN KEY (id_medico) REFERENCES medico(id)
+);
+
+-- Tabela valorespadroes
+CREATE TABLE valorespadroes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    limite_inferior DECIMAL(10, 2),
+    limite_superior DECIMAL(10, 2),
+    unidade_medida VARCHAR(50) NOT NULL,
+    valor_referencia VARCHAR(100)
+);
+
+-- Tabela senha
+CREATE TABLE senha (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    chave_secreta VARCHAR(100) NOT NULL
+);
+
+-- Tabela usuário
+CREATE TABLE usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    login VARCHAR(50) UNIQUE NOT NULL,
+    senha VARCHAR(64) NOT NULL
+);
+
+-- Inserindo médicos
+INSERT INTO medico (nome, cpf, especialidade) VALUES
+('Dr. Paulo Macedo', '159.753.852-23', 'Urologia');
+
+INSERT INTO medico (nome, cpf, especialidade) VALUES
+('Dr. João Ferreira', '357.456.951-21', 'Traumatologia');
+
+-- Inserindo pacientes
+
+INSERT INTO paciente (nome, cpf) VALUES
+('Gabriel Barbosa', '321.256.658-55');
+
+INSERT INTO paciente (nome, cpf) VALUES
+('Artur Antunes', '369.258.147-02');
+
+-- Inserindo valores padrões
+INSERT INTO valorespadroes (limite_inferior, limite_superior, unidade_medida, valor_referencia) VALUES
+(6.0, 8.3, 'mg/dL', 'Valores normais');
